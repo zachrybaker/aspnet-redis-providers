@@ -35,19 +35,18 @@ namespace Microsoft.Web.Redis
         {
             GetIProviderConfiguration(config, this);
 
-            var serializationTypeNameSpace = GetStringSettings(config, "sessionSerializationNamespaceAndType", null);
-            var serializationTypeAssembly = GetStringSettings(config, "sessionSerializationTypeAssembly", null);
+            var assemblyQualifiedClassName = GetStringSettings(config, "redisSerializerType", null);
 
-            if (!string.IsNullOrEmpty(serializationTypeNameSpace) && !string.IsNullOrEmpty(serializationTypeAssembly))
+            if (!string.IsNullOrEmpty(assemblyQualifiedClassName))
             {
                 try
                 {
-                    var serializer = Activator.CreateInstance(Type.GetType($"{serializationTypeNameSpace}, {serializationTypeAssembly}"));
+                    var serializer = Activator.CreateInstance(Type.GetType(assemblyQualifiedClassName));
                     SessionStateSerializer = (ISessionStateSerializer)serializer;
                 }
                 catch (Exception e)
                 {
-                    throw new TypeLoadException($"Could not activate Session Serialization Type from assembly {serializationTypeAssembly} and namespace {serializationTypeNameSpace}.", e);
+                    throw new TypeLoadException($"Could not activate Session Serialization Type from assembly qualified class name {assemblyQualifiedClassName}.", e);
                 }
             }
 

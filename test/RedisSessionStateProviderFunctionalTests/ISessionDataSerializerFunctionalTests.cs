@@ -43,8 +43,7 @@ namespace Microsoft.Web.RedisSessionStateProvider.Functional.Tests
                 var ssp = new Redis.RedisSessionStateProvider();
                 var config = new NameValueCollection()
                 {
-                    { "sessionSerializationNamespaceAndType", typeof(SessionStateSerializerExample).FullName },
-                    { "sessionSerializationTypeAssembly", typeof(SessionStateSerializerExample).Assembly.FullName },
+                    { "redisSerializerType", typeof(SessionStateSerializerExample).AssemblyQualifiedName },
                     { "ssl", "false" },
                 };
                 ssp.Initialize("ssp", config);
