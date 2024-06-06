@@ -30,6 +30,7 @@ namespace Microsoft.Web.Redis
         public int OperationTimeoutInMilliSec { get; set; }
         public string ConnectionString { get; set; }
         public ISessionStateSerializer SessionStateSerializer { get; set; } = new DefaultSessionStateSerializer();
+        public string SerializationSuffixForKeys { get; set; } = "";
 
         internal SessionStateProviderConfiguration(NameValueCollection config)
         {
@@ -43,6 +44,7 @@ namespace Microsoft.Web.Redis
                 {
                     var serializer = Activator.CreateInstance(Type.GetType(assemblyQualifiedClassName));
                     SessionStateSerializer = (ISessionStateSerializer)serializer;
+                    SerializationSuffixForKeys = $"_{SessionStateSerializer.GetType().Name}";
                 }
                 catch (Exception e)
                 {

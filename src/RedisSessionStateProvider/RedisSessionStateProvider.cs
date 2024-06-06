@@ -60,8 +60,8 @@ namespace Microsoft.Web.Redis
                 cache = new RedisSessionStateConnectionWrapper(configuration, id);
             }
             else
-            {
-                cache.Keys.RegenerateKeyStringIfIdModified(id, configuration.ApplicationName);
+            {;
+                cache.Keys.RegenerateKeyStringIfIdModified(id, configuration.ApplicationName, configuration.SerializationSuffixForKeys);
             }
         }
 

@@ -24,7 +24,7 @@ namespace Microsoft.Web.Redis
         public RedisSessionStateConnectionWrapper(SessionStateProviderConfiguration configuration, string id)
         {
             this.configuration = configuration;
-            Keys = new KeyGenerator(id, configuration.ApplicationName);
+            Keys = new KeyGenerator(id, configuration.ApplicationName, configuration.SerializationSuffixForKeys);
 
             // only single object of RedisSharedConnection will be created and then reused
             if (sharedConnection == null)
